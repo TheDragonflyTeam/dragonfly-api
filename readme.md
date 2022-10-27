@@ -5,6 +5,6 @@
 http://localhost:3000/login
 body
 {
-  email: string,
-  password: string
+  email: "lulu@lulu.com",
+  password: "lulu"
 }
