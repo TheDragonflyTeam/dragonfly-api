@@ -1,14 +1,12 @@
 const express = require("express");
 const Citoyen = require("../models/citoyen");
-const voteModel = require("../models/vote");
-const categorie = require("../models/categorie");
-const choixModel = require("../models/choix");
 const privateKey = require("../auth/private_key");
 const jwt = require('jsonwebtoken');
 const Categorie = require("../models/categorie");
 const Vote = require("../models/vote");
+const Choix = require("../models/choix");
 const app = express();
-
+const auth = require("../auth/auth");
 
 app.post('/login', (req, res) => {
   Citoyen.findOne({email: req.body.email})
@@ -22,11 +20,13 @@ app.post('/login', (req, res) => {
             console.log('ok');
             // JWT
             const token = jwt.sign(
-                { citoyenId: citoyen.id },
+                { citoyenId: citoyen._id },
                 privateKey,
                 { expiresIn: '24h' }
             );
 
+            console.log(citoyen._id)
+            console.log(privateKey)
             console.log(token);
 
             const message = `L'utilisateur a été connecté avec succès`
@@ -43,21 +43,43 @@ app.post('/login', (req, res) => {
       })
 })
 
-app.put("")
-
-app.post("/add-vote", async (request, response) => {
-  const vote = await Vote.create(request.body);
+app.post("/add-choix", auth, async (request, response) => {
+  const choix = await Choix.create(request.body);
 
   try {
-    await vote.save();
-    response.send(vote);
+    message = `Le choix "${request.body.label}" a bien été enregistré`
+    response.json(message).send(choix);
   } catch (error) {
     response.status(500).send(error);
   }
 
 });
 
-app.get("/citoyens", async (request, response) => {
+app.get("/choix/:id", auth, async (request, response) => {
+  const choix = await Choix.find({ "categorie": { _id: request.params.id}});
+  console.log(choix)
+  try {
+    response.send(choix);
+  } catch (error) {
+    response.status(500).send(error);
+  }
+});
+
+
+app.get("/add-vote", auth, async (request, response) => {
+  const vote = await Vote.create(request.body);
+
+  try {
+    message = `Le vote "${request.body.label}" dans la catégorie ayant pour id : "${request.body.categorie}" a bien été enregistré`
+    response.json(message).send(vote);
+  } catch (error) {
+    response.status(500).send(error);
+  }
+
+});
+
+
+app.get("/citoyens", auth, async (request, response) => {
   const citoyen = await Citoyen.find({});
   console.log(citoyen)
   try {
@@ -67,7 +89,17 @@ app.get("/citoyens", async (request, response) => {
   }
 });
 
-app.get("/votes/:id", async (request, response) => {
+app.get("/citoyen/:id", auth, async (request, response) => {
+  const citoyen = await Citoyen.find({ "_id": request.params.id});
+  console.log(citoyen)
+  try {
+    response.send(citoyen);
+  } catch (error) {
+    response.status(500).send(error);
+  }
+});
+
+app.get("/votes/:id", auth, async (request, response) => {
   const vote = await Vote.find({ "categorie": { _id: request.params.id}});
   console.log(vote)
   try {
@@ -78,7 +110,7 @@ app.get("/votes/:id", async (request, response) => {
 });
 
 
-app.get("/categories", async (request, response) => {
+app.get("/categories", auth, async (request, response) => {
   const categorie = await Categorie.find();
 
   try {
@@ -88,7 +120,15 @@ app.get("/categories", async (request, response) => {
   }
 });
 
+app.post("/register", async (request, response) => {
+  const citoyen = await Citoyen.create(request.body);
+
+  try {
+    message = `Le citoyen ${request.body.firstName + " " + request.body.lastName} a bien été enregistré`
+    response.json({ message, data: citoyen })  } catch (error) {
+    response.status(500).send(error);
+  }
+
+});
+
 module.exports = app;
-
-
-

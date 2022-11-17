@@ -1,10 +1,6 @@
 const mongoose = require("mongoose");
 
 const categorieSchema = new mongoose.Schema({
-  id: {
-    type: Number,
-    required: true,
-  },
   label: {
     type: String,
     default: 0,
