@@ -13,6 +13,18 @@ export default function Api({user}) {
                     ok/50 calls api 
                 </div>
             </div>
+            <div>
+                <p>Les différentes requêtes api</p>
+                <p>/login</p>
+                <p>/add-choix</p>
+                <p>/choix/:id</p>
+                <p>/add-vote</p>
+                <p>/citoyens</p>
+                <p>/citoyen/:id</p>
+                <p>/votes/:id</p>
+                <p>/categories</p>
+                <p>/register</p>
+            </div>
         </div>
     );
 }
