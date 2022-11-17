@@ -33,11 +33,10 @@ export default function Login({setUser}) {
     event.preventDefault();
     let { email, pass } = document.forms[0];
     let userData = await login(email.value, pass.value);
-
+    setUser('ok');
     if (userData.data.token) {
       setIsSubmitted(true);
-      setUser('ok');
-      navigate("/vote");
+      navigate("/api");
     } else {
       if(userData.message) {
         setErrorMessage(userData.message);
