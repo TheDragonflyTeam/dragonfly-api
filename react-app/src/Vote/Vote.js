@@ -42,25 +42,28 @@ export default class Vote extends React.Component {
         }
         
         return(
-        <div className="w-full max-w-xs">
-            <form onSubmit={handleSubmit} className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+            <div className="w-full max-w-xs">
                 <div>
-                    <label className="block text-gray-700 text-sm font-bold mb-2">Categorie</label>
-                    <select value={this.state.categories} onChange={this.handleChange} name="categorie" multiple={false} className="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" required>
-                        {categories.map(({ value, label, _id }, index) => <option id={_id} key={index} value={value}>{label}</option>)}
-                    </select>
+                    <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button"><a href="/api">Api</a></button>
                 </div>
-                <div>
-                    <label className="block text-gray-700 text-sm font-bold mb-2">Vote</label>
-                    <select value={this.state.votes} name="vote" multiple={false} className="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" required>
-                        {votes.map(({ value, label }, index) => <option key={index} value={value}>{label}</option>)}
-                    </select>
-                </div>
-                <div>
-                    <input type="submit" className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" />  
-                </div>
-            </form>
-        </div>
+                <form onSubmit={handleSubmit} className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+                    <div>
+                        <label className="block text-gray-700 text-sm font-bold mb-2">Categorie</label>
+                        <select value={this.state.categories} onChange={this.handleChange} name="categorie" multiple={false} className="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" required>
+                            {categories.map(({ value, label, _id }, index) => <option id={_id} key={index} value={value}>{label}</option>)}
+                        </select>
+                    </div>
+                    <div>
+                        <label className="block text-gray-700 text-sm font-bold mb-2">Vote</label>
+                        <select value={this.state.votes} name="vote" multiple={false} className="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" required>
+                            {votes.map(({ value, label }, index) => <option key={index} value={value}>{label}</option>)}
+                        </select>
+                    </div>
+                    <div>
+                        <input type="submit" className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" />  
+                    </div>
+                </form>
+            </div>
         );
     }
 }

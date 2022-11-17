@@ -4,11 +4,15 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import "../App.css";
+// import Cookies from 'universal-cookie';
 
-export default function Login() {
+export default function Login({setUser}) {
 
   const [errorMessage, setErrorMessage] = React.useState("");
   const [isSubmitted, setIsSubmitted] = useState(false);
+
+  // const cookies = new Cookies();
+  const navigate = useNavigate();
 
   const login = async(email, password) => {
     let res = null;
@@ -23,28 +27,16 @@ export default function Login() {
     }
 
     return res;
-    
-    // let result = null;
-
-    // if(String(email) === 'test@test.fr' && String(password) === 'test') {
-    //   result = {
-    //     'name': 'test',
-    //     'email' : 'test@test.fr',
-    //     'password': 'test'
-    //   }
-    // }
-    // return result;
   }
-
-  const navigate = useNavigate();
 
   const handleSubmit = async(event) => {
     event.preventDefault();
     let { email, pass } = document.forms[0];
     let userData = await login(email.value, pass.value);
 
-    if (userData.token) {
+    if (userData.data.token) {
       setIsSubmitted(true);
+      setUser('ok');
       navigate("/vote");
     } else {
       if(userData.message) {
@@ -53,7 +45,6 @@ export default function Login() {
         setErrorMessage("identifiants incorrect");
       }
     } 
-
   };
 
   const myForm = (
