@@ -20,7 +20,11 @@ const citoyenSchema = new mongoose.Schema({
   },
   votes:[
     {type: mongoose.Schema.Types.ObjectId, ref: 'Vote'}
-  ]
+  ],
+  nbRequst: {
+    type: Number,
+    default: 0,
+  },
 });
 
 const Citoyen = mongoose.model("Citoyen", citoyenSchema);
