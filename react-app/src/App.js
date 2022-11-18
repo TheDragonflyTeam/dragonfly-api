@@ -1,4 +1,3 @@
-//import logo from './logo.svg';
 import './App.css';
 import React, { useState } from 'react';
 import Explanation from './Explanation/Explanation';
@@ -11,19 +10,18 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 function App() {
 
-  const [user, setUser] = useState('Toto');
+  let [setUserToken, setUserName] = useState(null);
 
   return (
     <div className="wrapper">
-      <h1>{user}</h1>
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Explanation/>}/>
-          <Route path="/login" element={<Login setUser={setUser} />}/>
+          <Route path="/login" element={<Login setUserToken={setUserToken} setUserName={setUserName} />}/>
           <Route path="/signup" element={<SignUp/>}/>
           <Route path="/vote" element={<Vote/>}/>
           <Route path="/get-vote" element={<GetVote/>}/>
-          <Route path="/api" element={<Api user={user} />}/>
+          <Route path="/api" element={<Api token={setUserToken} name={setUserName} />}/>
         </Routes>
       </BrowserRouter>
     </div>

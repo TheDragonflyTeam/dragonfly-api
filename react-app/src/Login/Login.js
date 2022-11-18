@@ -1,17 +1,15 @@
 import React from "react";
 import axios from 'axios';
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import { Link } from "react-router-dom";
 import "../App.css";
-// import Cookies from 'universal-cookie';
 
-export default function Login({setUser}) {
+export default function Login() {
 
   const [errorMessage, setErrorMessage] = React.useState("");
   const [isSubmitted, setIsSubmitted] = useState(false);
 
-  // const cookies = new Cookies();
   const navigate = useNavigate();
 
   const login = async(email, password) => {
@@ -33,10 +31,11 @@ export default function Login({setUser}) {
     event.preventDefault();
     let { email, pass } = document.forms[0];
     let userData = await login(email.value, pass.value);
-    setUser('ok');
     if (userData.data.token) {
+      const token = userData.data.token;
+      const name = userData.data.data.firstName;
       setIsSubmitted(true);
-      navigate("/api");
+      navigate("/vote", {state: {token, name}});
     } else {
       if(userData.message) {
         setErrorMessage(userData.message);
