@@ -67,7 +67,7 @@ class SignUp extends React.Component {
 
   render(){
     return (
-      <div className="app">
+      <div className="app w-screen h-screen flex justify-center items-center">
         <div className="signin-form">
           <div className="w-full max-w-xs">
             <form onSubmit={this.handleSubmit} className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">

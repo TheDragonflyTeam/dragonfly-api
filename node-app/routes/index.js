@@ -66,7 +66,7 @@ app.get("/choix/:id", auth, async (request, response) => {
 });
 
 
-app.get("/add-vote", auth, async (request, response) => {
+app.post("/add-vote", auth, async (request, response) => {
   const vote = await Vote.create(request.body);
 
   try {

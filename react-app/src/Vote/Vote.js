@@ -14,7 +14,7 @@ export default function Vote() {
     const categoriesList = async () => {
         const location = useLocation();
         const token = location.state.token;
-        await axios.get('http://localhost:3000/categories', {headers: {'Authorization': 'Bearer' + token}})
+        await axios.get('http://localhost:3000/categories', {headers: {'Authorization': 'Bearer ' + token}})
             .then(response => {
                 categories = response.data;
             })
@@ -25,7 +25,7 @@ export default function Vote() {
         let {categorie} = document.forms[index].id;
         const location = useLocation();
         const token = location.state.token;
-        return await axios.get('http://localhost:3000/votes', {categorie}, {headers: {'Authorization': 'Bearer' + token}})
+        return await axios.get('http://localhost:3000/votes', {categorie}, {headers: {'Authorization': 'Bearer ' + token}})
         .then(response => {
             votes = response.data;
         })
@@ -39,7 +39,7 @@ export default function Vote() {
         let {categorie, vote} = document.forms[0];
         categorie = categorie.value;
         vote = vote.value;
-        await axios.post('http://localhost:3000/add-vote', {categorie, vote}, {headers: {'Authorization': 'Bearer' + token}});
+        await axios.post('http://localhost:3000/add-vote', {categorie, vote}, {headers: {'Authorization': 'Bearer ' + token}});
         (<Link push to="/get-vote"/>)
     }
 
@@ -47,12 +47,17 @@ export default function Vote() {
     const token = location.state.token;
     const name = location.state.name;
     return(
-        <div className="w-full max-w-xs">
+        <div className="w-screen h-screen flex justify-center items-center flex-col">
             <div>
                 <Link to="/api"
                     state={{token: token, name: name}}
                 >
                     <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button">Api</button>
+                </Link>
+                <Link to="/all-api"
+                    state={{token: token, name: name}}
+                >
+                    <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button">All api request and results</button>
                 </Link>
             </div>
             <form onSubmit={handleSubmit} className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">

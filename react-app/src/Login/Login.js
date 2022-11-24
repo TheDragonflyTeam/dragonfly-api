@@ -68,7 +68,7 @@ export default function Login() {
   );
 
   return (
-    <div className="app">
+    <div className="app w-screen h-screen flex justify-center items-center">
       <div className="login-form">
         {isSubmitted ? <div>Vous vous êtes connecté avec succès !</div> : myForm}
       </div>
